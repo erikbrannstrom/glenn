@@ -3,8 +3,8 @@ namespace Glenn;
 
 class Response
 {
-    public $status;
-    public $body;
+    private $status;
+    private $body;
 
     public function __construct($body = null, $status = 200)
     {
@@ -19,13 +19,13 @@ class Response
     {
         switch ($this->status) {
             case 200: 
-                header("HTTP/1.0 200 OK");
+                header("HTTP/1.1 200 OK");
                 break;
             case 404: 
-                header("HTTP/1.0 404 Not Found");
+                header("HTTP/1.1 404 Not Found");
                 break;
             case 500:
-                header("HTTP/1.0 500 Internal Server Error");
+                header("HTTP/1.1 500 Internal Server Error");
                 break;
         }
         
