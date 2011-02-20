@@ -3,7 +3,7 @@ namespace Glenn;
 
 abstract class Controller 
 {
-    private $request;
+    protected $request;
     
     public function __construct(Request $request)
     {

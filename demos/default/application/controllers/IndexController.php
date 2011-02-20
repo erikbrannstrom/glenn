@@ -1,7 +1,8 @@
 <?php
-use Glenn\Response;
+use Glenn\Controller,
+    Glenn\Response;
 
-class IndexController
+class IndexController extends Controller
 {
     public function indexAction()
     {
