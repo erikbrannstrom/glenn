@@ -13,6 +13,10 @@ class App
         spl_autoload_register(function($class_name) {
             require_once str_replace("\\", "/", $class_name) . '.php';
         });
+
+        set_exception_handler(function($exception) {
+            echo "<h1>Something went horribly wrong!</h1> <p>" . $exception->getMessage() . "</p>";
+        });
     }
     
     public static function start()

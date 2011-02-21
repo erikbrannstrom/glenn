@@ -17,6 +17,11 @@ class FrontController implements Dispatcher
         $class = ucfirst($result['controller']) . 'Controller';
         $method = lcfirst($result['action']) . 'Action';
         
+        $actions = get_class_methods($class);
+        if(!in_array($method, $actions)) {
+            throw new \BadMethodCallException("The action '$method' does not exist.");
+        }
+        
         $controller = new $class($request);
         
         return $controller->$method();

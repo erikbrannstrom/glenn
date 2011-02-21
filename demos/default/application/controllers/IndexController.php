@@ -9,7 +9,7 @@ class IndexController extends Controller
         return new Response("Index page");
     }
     
-    public function listAction()
+    public function aboutAction()
     
     {
         return new Response("About page");
