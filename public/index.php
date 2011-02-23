@@ -24,18 +24,12 @@ set_error_handler(function ($errno, $errstr, $errfile, $errline) {
 	$code = file($errfile);
 	
 	$start = ($errline <= 3) ? 0 : $errline-3;
-	$end = (count($code)-1 <= $errline+3) ? count($code)-1 : $errline+3;
+	$end = (count($code)+1 <= $errline+3) ? count($code)+1 : $errline+3;
 	
-	$errcode = '';
-	for ($i = $start; $i < $end; $i++) {
-		if($i == $errline-1) {
-			$errcode .= '--> ';
-		} else {
-			$errcode .= '    ';
-		}
-		$errcode .= $code[$i] . PHP_EOL;
+	$errcode = array();
+	for ($i = $start; $i <= $end; $i++) {
+		$errcode[$i] = htmlentities($code[$i-1]);
 	}
-	$errcode = htmlentities($errcode);
 
 	// Clean output buffer so we only print our error.
 	@ob_end_clean();

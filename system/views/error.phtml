@@ -32,18 +32,20 @@
 				border: 1px solid #ffcfcf;
 			}
 
-			pre.code {
-				font-family: Consolas, "Courier New", monospaced;
-				font-size: 12px;
-				line-height: 8px;
-				
-				background-color: #f9f9f9;
-				border: 1px solid #D0D0D0;
-				color: #002166;
-				display: block;
-				margin: 14px 0 14px 0;
-				padding: 12px 10px 12px 10px;
+			ol {
+				overflow:auto;
+				font-family: Consolas, "Courier New",Courier,mono;
+				margin:0;
+				background-color: black;
+				color: #ccc;
+				width:90%;
 			}
+			ol li {
+				background:#fff;
+				font-size:small;
+			}
+			ol li code {color:#036; font-family: Consolas; white-space: pre;}
+			ol li.active { background-color: #ffcfcf}
 
 		</style>
 	</head>
@@ -54,7 +56,12 @@
 		<div class="error">
 			<h2><?= $errstr ?></h2>
 			<p>An error ocurred on <strong>line <?= $errline ?></strong> in file <strong><?= $errfile ?></strong>.</p>
-			<pre class="code"><?= $errcode ?></pre>
+			<ol start="<?=$errline-3?>">
+				<?php foreach ($errcode as $line => $code): ?>
+					<li<?= ($line == $errline) ? ' class="active"' : '' ?>><code><?= $code ?></code></li>
+				<?php endforeach; ?>
+			</ol>
+
 		</div>
 
 	</body>
