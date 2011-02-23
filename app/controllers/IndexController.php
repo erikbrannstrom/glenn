@@ -7,6 +7,13 @@ class IndexController extends Controller
 {
     public function indexAction()
     {
-        return new Response(View::load('../app/views/index'));
+        $view = new View('index');
+        //$view->addParam('name', 'Glenn');
+		try {
+			$output = $view->render();
+		} catch(Exception $e) {
+			echo "GAAAAAAAAAH";
+		}
+        return new Response($output);
     }
 }
