@@ -1,5 +1,5 @@
 <?php
-use glenn\controller\Controller,
+use glenn\dispatch\Controller,
     glenn\http\Response,
 	glenn\view\View;
 
@@ -9,11 +9,7 @@ class IndexController extends Controller
     {
         $view = new View('index');
         //$view->addParam('name', 'Glenn');
-		try {
-			$output = $view->render();
-		} catch(Exception $e) {
-			echo "GAAAAAAAAAH";
-		}
+		$output = $view->render();
         return new Response($output);
     }
 }

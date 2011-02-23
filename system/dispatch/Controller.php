@@ -1,5 +1,5 @@
 <?php
-namespace glenn\controller;
+namespace glenn\dispatch;
 
 use glenn\http\Request;
 
