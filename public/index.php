@@ -1,12 +1,15 @@
 <?php
 
-$start_time = microtime(true);
-$start_mem = memory_get_usage();
+// Define constants for profiling so we don't cause conflicts with variable names.
+define('START_TIME', microtime(true));
+define('START_MEMORY', memory_get_usage());
 
+// Useful constants for creating paths.
 define('DS', DIRECTORY_SEPARATOR);
 define('APP_PATH', realpath('../app') . DS);
 define('SYSTEM_PATH', realpath('../system') . DS);
 
+// Set include paths, highest priority first.
 set_include_path(
 	APP_PATH . 'controllers' . PATH_SEPARATOR .
 	APP_PATH . 'models' . PATH_SEPARATOR . 
@@ -15,8 +18,7 @@ set_include_path(
 );
 
 spl_autoload_register(function($class_name) {
-	$path = str_replace("\\", "/", $class_name) . '.php';
-	require_once $path;
+	require_once str_replace("\\", "/", $class_name) . '.php';
 });
 
 // Create a custom error handler
@@ -64,6 +66,6 @@ $response->send();
 // Echo resource use
 echo '<pre>';
 echo 'RESOURCES:' . PHP_EOL;
-echo (microtime(true) - $start_time) * 1000 . ' ms' . PHP_EOL;
-$bytes = memory_get_usage() - $start_mem;
+echo (microtime(true) - START_TIME) * 1000 . ' ms' . PHP_EOL;
+$bytes = memory_get_usage() - START_MEMORY;
 echo ($bytes / 1000) . ' kB (' . ($bytes / (1000 * 1000)) . ' MB)';
