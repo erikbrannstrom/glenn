@@ -7,11 +7,15 @@ define('DS', DIRECTORY_SEPARATOR);
 define('APP_PATH', realpath('../app') . DS);
 define('SYSTEM_PATH', realpath('../system') . DS);
 
-set_include_path(APP_PATH . 'controllers' . PATH_SEPARATOR . APP_PATH . 'classes' . PATH_SEPARATOR . SYSTEM_PATH);
+set_include_path(
+	APP_PATH . 'controllers' . PATH_SEPARATOR .
+	APP_PATH . 'models' . PATH_SEPARATOR . 
+	APP_PATH . 'extensions' . PATH_SEPARATOR . 
+	SYSTEM_PATH
+);
 
 spl_autoload_register(function($class_name) {
 	$path = str_replace("\\", "/", $class_name) . '.php';
-	$path = str_replace('glenn/', '', $path);
 	require_once $path;
 });
 
@@ -31,7 +35,7 @@ set_error_handler(function ($errno, $errstr, $errfile, $errline) {
 		$errcode[$i] = htmlentities($code[$i-1]);
 	}
 
-	// Clean output buffer so we only print our error.
+	// Clean output buffer if it's in use so we only print the error.
 	@ob_end_clean();
 	if(file_exists(APP_PATH . 'views/error.phtml')) {
 		include APP_PATH . 'views/error.phtml';
@@ -50,7 +54,7 @@ set_error_handler(function ($errno, $errstr, $errfile, $errline) {
  * ******************* */
 
 use glenn\http\Request,
-	glenn\dispatch\FrontController;
+	glenn\action\FrontController;
 
 $request = new Request();
 $frontController = new FrontController();

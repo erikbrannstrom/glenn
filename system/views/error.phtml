@@ -40,12 +40,25 @@
 				color: #ccc;
 				width:90%;
 			}
+			
 			ol li {
 				background:#fff;
 				font-size:small;
 			}
-			ol li code {color:#036; font-family: Consolas; white-space: pre;}
-			ol li.active { background-color: #ffcfcf}
+			
+			ol li code {
+				color:#666;
+				font-family: Consolas;
+				white-space: pre;
+			}
+			
+			ol li.active {
+				background-color: #ffcfcf;
+			}
+			
+			ol li.active code {
+				color: #000;
+			}
 
 		</style>
 	</head>
@@ -56,7 +69,7 @@
 		<div class="error">
 			<h2><?= $errstr ?></h2>
 			<p>An error ocurred on <strong>line <?= $errline ?></strong> in file <strong><?= $errfile ?></strong>.</p>
-			<ol start="<?=$errline-3?>">
+			<ol start="<?= $errline - 3 ?>">
 				<?php foreach ($errcode as $line => $code): ?>
 					<li<?= ($line == $errline) ? ' class="active"' : '' ?>><code><?= $code ?></code></li>
 				<?php endforeach; ?>
