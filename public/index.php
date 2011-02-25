@@ -6,15 +6,19 @@ define('START_MEMORY', memory_get_usage());
 
 // Useful constants for creating paths.
 define('DS', DIRECTORY_SEPARATOR);
+define('PS', PATH_SEPARATOR);
+define('BASE_PATH', realpath('..') . DS);
 define('APP_PATH', realpath('../app') . DS);
 define('SYSTEM_PATH', realpath('../system') . DS);
 
 // Set include paths, highest priority first.
 set_include_path(
-	APP_PATH . 'controllers' . PATH_SEPARATOR .
-	APP_PATH . 'models' . PATH_SEPARATOR . 
-	APP_PATH . 'extensions' . PATH_SEPARATOR . 
-	SYSTEM_PATH
+	get_include_path() . PS .
+	APP_PATH . 'controllers' . PS .
+	APP_PATH . 'models' . PS . 
+	APP_PATH . 'lib' . PS .
+	BASE_PATH . 'bundle/lib' . PS .
+	SYSTEM_PATH . 'lib'
 );
 
 spl_autoload_register(function($class_name) {
