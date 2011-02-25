@@ -9,20 +9,33 @@ define('DS', DIRECTORY_SEPARATOR);
 define('PS', PATH_SEPARATOR);
 define('BASE_PATH', realpath('..') . DS);
 define('APP_PATH', realpath('../app') . DS);
-define('SYSTEM_PATH', realpath('../system') . DS);
+define('SYSTEM_PATH', realpath('../glenn') . DS);
 
-// Set include paths, highest priority first.
-set_include_path(
-	get_include_path() . PS .
-	APP_PATH . 'controllers' . PS .
-	APP_PATH . 'models' . PS . 
-	APP_PATH . 'lib' . PS .
-	BASE_PATH . 'bundle/lib' . PS .
-	SYSTEM_PATH . 'lib'
-);
-
+// Create auto-loader
 spl_autoload_register(function($class_name) {
-	require_once str_replace("\\", "/", $class_name) . '.php';
+	$paths = array(
+		'app' => APP_PATH, 
+		'streambur' => BASE_PATH . 'streambur' . DS,
+		'glenn' => SYSTEM_PATH
+	);
+	
+	$namespace = explode('\\', $class_name);
+	foreach($paths as $name => $path) {
+		if($namespace[0] === $name) {
+			unset($namespace[0]);
+			$test = $path . 'classes/' . implode(DS, $namespace) . '.php';
+			if(file_exists($test)) {
+				require_once $test;
+				return;
+			}
+		} else {
+			$test = $path . 'extensions/' . implode(DS, $namespace) . '.php';
+			if(file_exists($test)) {
+				require_once $test;
+				return;
+			}
+		}
+	}
 });
 
 // Create a custom error handler
@@ -55,9 +68,9 @@ set_error_handler(function ($errno, $errstr, $errfile, $errline) {
 	return true;
 });
 
-/* * *******************
+/*********************
  * Start application *
- * ******************* */
+ *********************/
 
 use glenn\http\Request,
 	glenn\action\FrontController;

@@ -1,4 +1,6 @@
 <?php
+namespace app\controller;
+
 use glenn\action\Controller,
     glenn\http\Response,
 	glenn\view\View;

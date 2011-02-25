@@ -17,7 +17,7 @@ class FrontController implements Dispatcher
         //$result = $this->router->route($request->uri());
 		$result = array('controller' => 'index', 'action' => 'index');
 		
-		$class = \ucfirst($result['controller']) . 'Controller';
+		$class = 'app\\controller\\' . \ucfirst($result['controller']) . 'Controller';
 		$controller = new $class($request);
         $method = \lcfirst($result['action']) . 'Action';
 		
